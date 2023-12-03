@@ -5,12 +5,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TokenApi.Utils;
 
 var builder = WebApplication.CreateSlimBuilder(args);
+
+builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -25,6 +29,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddSingleton(_ => new CtxUsers(builder.Configuration["AppConfig:LoginRegistryDB"]));
+builder.Services.AddSingleton(_ => new CtxTokens(builder.Configuration["AppConfig:LoginRegistryDB"]));
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(jwtSettings);
@@ -61,6 +66,7 @@ if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+    builder.Logging.AddConsole();
 }
 
 var app = builder.Build();
@@ -114,6 +120,20 @@ app.MapPost("/login", [Authorize] (TokenGenerator tokenService, LoginDto loginDt
 
     return Results.Unauthorized();
 });
+
+app.MapPost("/TestIssuer", [Authorize] (HttpContext httpContext) =>
+{
+    // Aqui você pode verificar as credenciais do usuário
+    // E também pode acessar o token JWT e suas claims se necessário
+    // Exemplo: var productId = httpContext.User.FindFirst("ProductId")?.Value;
+
+    ClaimsPrincipal user = httpContext.User;
+
+
+    return user;
+});
+
+
 
 /*app.MapPost("/loginOLD", async (TokenGenerator tokenService, LoginDto loginDto) =>
 {

@@ -31,11 +31,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenApi", "TokenApi\TokenA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{97170CF9-F7A9-49AF-833B-CB1AD52DFD0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenApi.Tests", "TokenApi.Tests\TokenApi.Tests.csproj", "{6772CEA8-0E34-48F9-B398-480AA7124671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenApi.Tests", "TokenApi.Tests\TokenApi.Tests.csproj", "{6772CEA8-0E34-48F9-B398-480AA7124671}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterApi.Tests", "RegisterApi.Tests\RegisterApi.Tests.csproj", "{1355ADD4-5369-4864-94F4-206E3D91DB74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegisterApi.Tests", "RegisterApi.Tests\RegisterApi.Tests.csproj", "{1355ADD4-5369-4864-94F4-206E3D91DB74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthApi.Tests", "AuthApi.Tests\AuthApi.Tests.csproj", "{7B09F312-7F25-4F1D-BA7A-763F919B15E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthApi.Tests", "AuthApi.Tests\AuthApi.Tests.csproj", "{7B09F312-7F25-4F1D-BA7A-763F919B15E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8BEBDF4-F85D-4462-964E-F303EA62E673}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
