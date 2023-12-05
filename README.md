@@ -11,3 +11,5 @@ Some aspects of this project:
 - Unity and Integrated Tests
 - Minimal APIs
 - Dependency Injection for services
+- Claim Transformation - Create complexity for api level access
+- 
