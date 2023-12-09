@@ -1,7 +1,8 @@
-using Application.DTOs;
+Ôªøusing Application.DTOs;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,13 +11,21 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TokenMan.Extensions;
 using TokenMan.Jwt;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 
-builder.Services.ConfigureHttpJsonOptions(options =>
+builder.Services.AddSingleton(_ => new CtxUsers(builder.Configuration["AppConfig:LoginRegistryDB"]));
+builder.Services.AddSingleton(_ => new CtxTokens(builder.Configuration["AppConfig:LoginRegistryDB"]));
+
+builder.configureJTW();
+
+
+/*
+ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
@@ -25,11 +34,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    // Outras configuraÁıes...
+    // Outras configura√ß√µes...
 });
-
-builder.Services.AddSingleton(_ => new CtxUsers(builder.Configuration["AppConfig:LoginRegistryDB"]));
-builder.Services.AddSingleton(_ => new CtxTokens(builder.Configuration["AppConfig:LoginRegistryDB"]));
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(jwtSettings);
@@ -38,7 +44,6 @@ builder.Services.AddSingleton<TokenGenerator>();
 var appAuth = builder.Configuration.GetSection("AppAuthSettings");
 builder.Services.Configure<AppAuthSettings>(builder.Configuration.GetSection("AppAuthSettings"));
 //builder.Services.AddSingleton<TokenGenerator>();
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -60,7 +65,7 @@ builder.Services.AddAuthentication(options =>
                 Encoding.UTF8.GetBytes(jwtSettings.Get<JwtSettings>().IssuerSigningKey))
         };
     });
-
+*/
 
 if (builder.Environment.IsDevelopment())
 {
@@ -68,6 +73,28 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddSwaggerGen();
     builder.Logging.AddConsole();
 }
+
+// Adiciona suporte a HTTPS
+/*builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    // Configura√ß√£o para ambiente de desenvolvimento
+    if (builder.Environment.IsDevelopment())
+    {
+        serverOptions.ListenLocalhost(8081, listenOptions =>
+        {
+            listenOptions.UseHttps("/root/.aspnet/https/TokenApi.pfx", "62f3b351-eecc-40e5-93aa-79b22ff6cd2d");
+        });
+    }
+    else
+    {
+        // Configura√ß√£o para produ√ß√£o ou outros ambientes
+        serverOptions.ListenAnyIP(444, listenOptions =>
+        {
+            listenOptions.UseHttps();
+        });
+    }
+});
+*/
 
 var app = builder.Build();
 
@@ -82,21 +109,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var sampleTodos = new Todo[] {
-    new(1, "Walk the dog"),
-    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
-    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
-    new(4, "Clean the bathroom"),
-    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
-};
-
-var todosApi = app.MapGroup("/todos");
-todosApi.MapGet("/", () => sampleTodos);
-todosApi.MapGet("/{id}", (int id) =>
-    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
-        ? Results.Ok(todo)
-        : Results.NotFound());
-
 var tokenApi = app.MapGroup("/token");
 
 
@@ -104,72 +116,57 @@ var tokenApi = app.MapGroup("/token");
 
 app.MapPost("/login", [Authorize] (TokenGenerator tokenService, LoginDto loginDto, HttpContext httpContext) =>
 {
-    // Aqui vocÍ pode verificar as credenciais do usu·rio
-    // E tambÈm pode acessar o token JWT e suas claims se necess·rio
-    // Exemplo: var productId = httpContext.User.FindFirst("ProductId")?.Value;
+    // login only can be called from a valid app token 
+    bool? isValidUser = httpContext.User.Identity?.IsAuthenticated; // Simula√ß√£o
 
-    // ImplementaÁ„o da lÛgica de login
-    bool isValidUser = true; // SimulaÁ„o
-
-    if (isValidUser)
+    if (isValidUser ?? false)
     {
-        // Gerar um token de acesso (diferente do token tempor·rio)
-        var accessToken = tokenService.GenerateJwtToken(true, false, loginDto.Username); // Implemente este mÈtodo
+        // Generated a L1 authenticated token for the user
+        var accessToken = tokenService.GenerateJwtToken(true, false, loginDto.Username); // Implemente este m√©todo
         return Results.Ok(new TokenResponseDto() { Token  = accessToken });
     }
 
     return Results.Unauthorized();
 });
 
-
-/*app.MapPost("/loginOLD", async (TokenGenerator tokenService, LoginDto loginDto) =>
-{
-    // Substitua esta parte pelo seu mÈtodo de validaÁ„o de usu·rio
-    bool isValidUser = true; // SimulaÁ„o
-
-    if (isValidUser)
-    {
-        var token = tokenService.GenerateJwtToken(true, "IdDoUsuario"); // Substitua pelo seu mÈtodo de geraÁ„o de token
-        return Results.Ok(new { token });
-    }
-
-    return Results.Unauthorized();
-});
-*/
 tokenApi.MapPost("/request-token", (TokenGenerator tokenService, TokenRequestDto requestDto) =>
 {
     try
     {
+        // Generates a L0 authentication token. Without this caller cannot have access to the Login neither registration API
         var token = tokenService.GenerateTemporaryToken(requestDto);
         return Results.Ok(new TokenResponseDto { Token = token });
     }
-        catch (Exception ex)
+    catch (Exception ex)
     {
         return Results.BadRequest(ex.Message);
     }   
 });
 
-tokenApi.MapGet("/anonymous-token", (TokenGenerator tokenService, TokenRequestDto appData) =>
+tokenApi.MapGet("/anonymous-token", [Authorize] (TokenGenerator tokenService, TokenRequestDto appData, HttpContext httpContext) =>
 {
-    if (appData.AppSecret != "123" || appData.AppId != "123" || appData.ProductId != "123")
+    // login only can be called from a valid app token 
+    bool? isValidUser = httpContext.User.Identity?.IsAuthenticated;
+
+    if (isValidUser??false)
     {
-        return Results.Unauthorized();
+        // Generated a L1 authenticated token for the user, this token serves only for registration purposes
+        var accessToken = tokenService.GenerateJwtToken(true, true);
+        return Results.Ok(new TokenResponseDto() { Token = accessToken });
     }
-    var token = tokenService.GenerateJwtToken(false, true); // Substitua pelo seu mÈtodo de geraÁ„o de token
-    return Results.Ok(new { token });
+
+    return Results.Unauthorized();
 });
 
+app.MapPost("/health", () =>
+{
+    return Results.Ok(Results.Empty);
+});
+
+app.MapPost("/", () =>
+{
+    return Results.Ok("Ol√° mundo!");
+});
 
 app.Run();
 
-public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
-
-[JsonSerializable(typeof(Todo[]))]
-[JsonSerializable(typeof(TokenDto[]))]
-[JsonSerializable(typeof(TokenRequestDto[]))]
-[JsonSerializable(typeof(TokenResponseDto[]))]
-[JsonSerializable(typeof(LoginDto[]))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
-
-}
