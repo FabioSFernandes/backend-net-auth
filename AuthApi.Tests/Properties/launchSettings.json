@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AuthApi.Tests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

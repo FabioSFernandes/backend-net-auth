@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenMan", "TokenMan\TokenMan.csproj", "{72F993FD-8FE5-4D6E-A219-C2FA19D38F36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{7B09F312-7F25-4F1D-BA7A-763F919B15E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B09F312-7F25-4F1D-BA7A-763F919B15E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B09F312-7F25-4F1D-BA7A-763F919B15E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72F993FD-8FE5-4D6E-A219-C2FA19D38F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F993FD-8FE5-4D6E-A219-C2FA19D38F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F993FD-8FE5-4D6E-A219-C2FA19D38F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F993FD-8FE5-4D6E-A219-C2FA19D38F36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +114,7 @@ Global
 		{6772CEA8-0E34-48F9-B398-480AA7124671} = {97170CF9-F7A9-49AF-833B-CB1AD52DFD0E}
 		{1355ADD4-5369-4864-94F4-206E3D91DB74} = {97170CF9-F7A9-49AF-833B-CB1AD52DFD0E}
 		{7B09F312-7F25-4F1D-BA7A-763F919B15E2} = {97170CF9-F7A9-49AF-833B-CB1AD52DFD0E}
+		{72F993FD-8FE5-4D6E-A219-C2FA19D38F36} = {C6FC811B-76B8-4E8E-8672-AE2CBBF30455}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A387A35-0BD9-4B14-BCAA-80015F11AF14}

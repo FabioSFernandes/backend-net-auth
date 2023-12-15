@@ -5,7 +5,7 @@ namespace AuthApi.Tests
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
