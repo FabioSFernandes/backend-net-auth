@@ -12,7 +12,8 @@ namespace TokenMan.Serializeable
     [JsonSerializable(typeof(TokenRequestDto[]))]
     [JsonSerializable(typeof(TokenResponseDto[]))]
     [JsonSerializable(typeof(LoginDto[]))]
-    internal partial class AppJsonSerializerContext : JsonSerializerContext
+    [JsonSerializable(typeof(LoginResponseDto[]))]
+    public partial class AppJsonSerializerContext : JsonSerializerContext
     {
 
     }

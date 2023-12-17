@@ -13,7 +13,7 @@ namespace Application.DTOs
     {
         //[Required]
         //[StringLength(50)]
-        public string Username { get; set; }
+        public string UserId { get; set; }
 
         //[Required]
         //[StringLength(100)]
