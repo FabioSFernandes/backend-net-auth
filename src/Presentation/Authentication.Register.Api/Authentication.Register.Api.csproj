@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <UserSecretsId>57bbde01-c986-4927-be17-c18271c6f7a6</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Application\Authentication.Interfaces\Authentication.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Application\Authenticaton.Application\Authentication.Application.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\Authentication.Common.Helpers\Authentication.Common.Helpers.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\Authentication.Common.Logging\Authentication.Common.Logging.csproj" />
+    <ProjectReference Include="..\..\CrossCutting\Authentication.Common.TokenManager\Authentication.Common.TokenManager.csproj" />
+    <ProjectReference Include="..\..\Domain\Authentication.Domain\Authentication.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Authentication.Infrastructure\Authentication.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
