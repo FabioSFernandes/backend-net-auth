@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Presentation\Authentication.Register.Api\Authentication.Register.Api.csproj" />
     <ProjectReference Include="..\..\Presentation\Register.Api\Authentication.Register.Api.csproj" />
   </ItemGroup>
 

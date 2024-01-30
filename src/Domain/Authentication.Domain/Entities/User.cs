@@ -27,8 +27,6 @@ namespace Domain.Entities
         [StringLength(15)]
         public string Phone { get; set; }
 
-        [StringLength(15)]
-        public string SecondaryPhone { get; set; }
 
         [StringLength(100)]
         public string Contact { get; set; }
@@ -39,13 +37,13 @@ namespace Domain.Entities
         public string Email { get; set; }
 
         [StringLength(20)]
-        public string GOVID { get; set; }
+        public string GovId { get; set; }
 
         [StringLength(20)]
-        public string FISCALID { get; set; }
+        public string FiscalId { get; set; }
 
         [StringLength(20)]
-        public string CORPORATEID { get; set; }
+        public string CompanyId { get; set; }
 
         [Required]
         public int UserType { get; set; }
