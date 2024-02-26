@@ -1,4 +1,4 @@
-namespace RegisterApi.Tests
+namespace Authentication.Api.Tests
 {
     public class UnitTest1
     {

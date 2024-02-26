@@ -127,14 +127,14 @@ tokenApi.MapGet("/anonymous-token", [Authorize] ([FromServices]TokenGenerator to
     return Results.Unauthorized();
 });
 
-app.MapPost("/health", () =>
+app.MapGet("/health", () =>
 {
     return Results.Ok(Results.Empty);
 });
 
-app.MapPost("/", () =>
+app.MapGet("/", () =>
 {
-    return Results.Ok("Olá mundo!");
+    return Results.Ok("Hello!");
 });
 
 
@@ -144,7 +144,9 @@ app.MapPost("/", () =>
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+public partial class Program { }
