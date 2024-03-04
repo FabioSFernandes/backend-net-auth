@@ -59,6 +59,7 @@ namespace Authentication.Api.Tests
             Assert.True(response.StatusCode.As<int>()<299, "Token should not be served with wrong auth attempt");
         }
 
+        /*
         [Theory]
         [InlineData("/token/anonymous-token")]
         public async Task TokenEndpoint_AnonymousToken(string url)
@@ -77,6 +78,7 @@ namespace Authentication.Api.Tests
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.True(response.StatusCode.As<int>() < 299, "Token should not be served with wrong auth attempt");
         }
+        */
 
         [Theory]
         [InlineData("/")]

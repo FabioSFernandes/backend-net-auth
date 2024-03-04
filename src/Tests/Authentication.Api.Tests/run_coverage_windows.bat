@@ -2,7 +2,12 @@
 SETLOCAL EnableDelayedExpansion
 
 :: Executa os testes e coleta a cobertura de código
-dotnet test --collect:"XPlat Code Coverage"
+
+:: testador interno do .net core (não gera relatório de cobertura)
+::dotnet test --collect:"Code Coverage" --settings:Custom.runsettings
+
+:: A seguinte linha ativa o uso do Coverlet 
+dotnet test --collect:"XPlat Code Coverage" --settings:Custom.runsettings
 
 :: Define o caminho inicial para a busca dos arquivos de cobertura
 SET COVERAGE_PATH=TestResults

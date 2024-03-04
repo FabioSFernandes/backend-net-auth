@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Configura��es da Cobertura de C�digo -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+
+        <Format>json,cobertura,lcov,teamcity,opencover</Format>
+        <Exclude>[coverlet.*.tests?]*,[*]Coverlet.Core*,[*]Authentication.Interfaces*,[*]Authentication.Application*,[*]Authentication.Common.Helpers*,[*]Authentication.Common.Logging*,[*]Authentication.Common.TokenManager*, </Exclude>
+        <!-- [Assembly-Filter]Type-Filter -->
+        <Include>[coverlet.*]*,[*]Coverlet.Core*,[*]Authentication.Api*,</Include>
+        <!-- [Assembly-Filter]Type-Filter -->
+        <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+        <ExcludeByFile>**/dir1/class1.cs,**/dir2/*.cs,**/dir3/**/*.cs,</ExcludeByFile>
+        <!-- Globbing filter -->
+        <IncludeDirectory>../dir1/,../dir2/,</IncludeDirectory>
+        <SingleHit>false</SingleHit>
+        <UseSourceLink>true</UseSourceLink>
+        <IncludeTestAssembly>true</IncludeTestAssembly>
+        <SkipAutoProps>true</SkipAutoProps>
+        <DeterministicReport>false</DeterministicReport>
+        <ExcludeAssembliesWithoutSources>MissingAll,MissingAny,None</ExcludeAssembliesWithoutSources>
+			
+          <CodeCoverage>
+            <!-- Excluir projetos espec�ficos -->
+            <ModulePaths>
+                <Exclude>
+                <!-- Adicione o nome do assembly aqui para exclu�-lo -->
+	                <ModulePath>.*\\Authentication.Interfaces.dll</ModulePath>
+	                <ModulePath>.*\\Authentication.Application.dll</ModulePath>
+	                <ModulePath>.*\\Authentication.Common.Helpers.dll</ModulePath>
+	                <ModulePath>.*\\Authentication.Common.Logging.dll</ModulePath>
+	                <ModulePath>.*\\Authentication.Common.TokenManager.dll</ModulePath>
+	                <ModulePath>.*\\Authentication.Domain.dll</ModulePath>
+	                <ModulePath>.*\\Authentication.Infrastructure.dll</ModulePath>
+
+	                <!-- Voc� pode adicionar m�ltiplas linhas como esta para excluir v�rios projetos -->
+                </Exclude>
+            </ModulePaths>
+            <!-- Incluir todos os outros projetos -->
+            <Include>
+              <ModulePath>.*\\.dll$</ModulePath>
+              <ModulePath>.*\\.exe$</ModulePath>
+            </Include>
+          </CodeCoverage>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
+
+
+

@@ -1,10 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
+	  <RunSettingsFilePath>$(MSBuildProjectDirectory)\Custom.runsettings</RunSettingsFilePath>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
 	<PreserveCompilationContext>true</PreserveCompilationContext>
@@ -24,6 +24,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+	<DotNetCliToolReference Include="dotnet-reportgenerator-cli" Version="4.6.7" />
   </ItemGroup>
 
   <ItemGroup>

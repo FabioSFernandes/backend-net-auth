@@ -36,6 +36,27 @@ builder.configureJTW();
 
 var app = builder.Build();
 
+app.MapGet("/oi", () => {
+
+    string nome = "Henry";
+    string apelidos = "Detona Half, goido";
+    DateTime dataNascimento = new DateTime(2022, 5, 28);
+    string habilidadeMaior = "Força e inteligência";
+    string poder = "leite";
+    string fraqueza = "Adora bolacha wafer de chocolate Bauducco";
+    int idade = 20; // meses
+    float peso = 16.55f;
+    double altura = 0.85;
+
+    string texto = $"O {nome} e um goidim muito forte." +
+                   $"Ele nasceu em {dataNascimento}, portanto tem {idade} meses.";
+
+
+    return ("Oi voce me chamou pela internet");
+
+
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
